@@ -7,13 +7,15 @@ class State
 
 public:
 	char board[6][6];
+	int varScore;
 	State();
 	State(State*, int oldx, int oldy, int newx, int newy);
 	bool isFinal();
 	int score();
-	std::list<State*> generateNextStates();
+	std::list<State*> generateNextStates(char player);
 	std::list<State*> generateNextStatesByPosition(int, int);
 	void print();
+	void setScore(int score);
 
 	static bool compareStates(State* a, State* b) {
 		return a->score() > b->score();

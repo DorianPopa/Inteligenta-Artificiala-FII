@@ -20,6 +20,8 @@ State::State()
 		board[1][i] = 'c';
 		board[4][i] = 'j';
 	}
+
+	varScore = INT_MIN;
 }
 
 State::State(State* state, int oldx, int oldy, int newx, int newy) {
@@ -34,6 +36,7 @@ State::State(State* state, int oldx, int oldy, int newx, int newy) {
 		(state->board[oldx][oldy] == 'c' && state->board[newx][newy] != 'j'))
 		std::swap(board[oldx][oldy], board[newx][newy]);
 
+	varScore = INT_MIN;
 }
 
 bool State::isFinal() {
@@ -47,22 +50,36 @@ bool State::isFinal() {
 }
 
 int State::score() {
-	int total = 0;
+	if (varScore != INT_MIN && varScore != INT_MAX)
+		return varScore;
+
+	int totalComputer = 0;
 	for (int i = 1; i < 5; i++) {
 		for (int j = 1; j < 5; j++) {
 			if (board[i][j] == 'c') {
-				total += i;
+				totalComputer += i;
 			}
 		}
 	}
-	return total;
+
+	int totalPlayer = 0;
+	for (int i = 1; i < 5; i++) {
+		for (int j = 1; j < 5; j++) {
+			if (board[i][j] == 'j') {
+				totalPlayer += (5 - i);
+			}
+		}
+	}
+	varScore = totalComputer - totalPlayer;
+	return varScore;
 }
 
-std::list<State*> State::generateNextStates() {
+std::list<State*> State::generateNextStates(char player) {
+
 	std::list<State*> lista;
 	for (int i = 1; i < 5; i++) {
 		for (int j = 1; j < 5; j++) {
-			if (board[i][j] == 'c') {
+			if (board[i][j] == player) {
 				std::list<State*> newLista = generateNextStatesByPosition(i, j);
 				for (std::list<State*>::iterator it = newLista.begin(); it != newLista.end(); it++) {
 					lista.push_back((*it));
@@ -103,4 +120,9 @@ void State::print() {
 		std::cout << j << " ";
 	}
 	std::cout << std::endl;
+}
+
+void State::setScore(int score)
+{
+	varScore = score;
 }

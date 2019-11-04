@@ -8,7 +8,7 @@
 
 int main()
 {
-	Game* game = new Game("best1depth");
+	Game* game = new Game("minimax");
 	game->mainGameLoop();
 	return 0;
 }
