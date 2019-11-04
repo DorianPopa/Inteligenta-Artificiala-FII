@@ -14,5 +14,9 @@ public:
 	std::list<State*> generateNextStates();
 	std::list<State*> generateNextStatesByPosition(int, int);
 	void print();
+
+	static bool compareStates(State* a, State* b) {
+		return a->score() > b->score();
+	}
 };
 

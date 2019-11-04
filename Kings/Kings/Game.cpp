@@ -1,7 +1,20 @@
 #include "Game.h"
 
-void Game::playerMove()
+Game::Game(std::string solverType)
 {
+	theBot = new Computer(solverType);
+}
+
+State* Game::getCurrentState() {
+	return states.back();
+}
+
+void Game::renderBoard() {
+	getCurrentState()->print();
+	std::cout << std::endl << "---------" << std::endl;
+}
+
+void Game::playerMove() {
 	int fromX, fromY, toX, toY;
 	std::cout << "Input (initial coords)(final coords): ";
 	std::cin >> fromX >> fromY >> toX >> toY;
@@ -11,24 +24,8 @@ void Game::playerMove()
 		states.push_back(newState);
 }
 
-bool compareStates(State* a, State* b) {
-	return a->score() > b->score();
-}
-
 void Game::computerMove() {
-	std::list<State*> newStates = getCurrentState()->generateNextStates();
-	newStates.sort(compareStates);
-	states.push_back(newStates.front());
-}
-
-void Game::renderBoard() {
-	getCurrentState()->print();
-	std::cout << std::endl << "---------" << std::endl;
-}
-
-State* Game::getCurrentState()
-{
-	return states.back();
+	states.push_back(theBot->getNextMove(getCurrentState()));
 }
 
 void Game::mainGameLoop()
@@ -52,5 +49,4 @@ void Game::mainGameLoop()
 		std::cout << "Player won! gj" << std::endl;
 	else if(currentPlayer == 'c')
 		std::cout << "Git gud m8" << std::endl;
-	
 }

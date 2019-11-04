@@ -1,19 +1,24 @@
 #pragma once
 #include <iostream>
 #include "State.h"
+#include "Computer.h"
 
 
 class Game
 {
+private:
+	Computer* theBot;
 	std::list<State*> states;
-
-public:
+	
 	void playerMove();
 	void computerMove();
 
 	void renderBoard();
 	State* getCurrentState();
-	void mainGameLoop();
 
+public:
+
+	Game(std::string solverType);
+	void mainGameLoop();
 };
 

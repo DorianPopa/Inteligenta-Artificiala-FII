@@ -73,7 +73,6 @@ std::list<State*> State::generateNextStates() {
 	return lista;
 }
 
-
 std::list<State*> State::generateNextStatesByPosition(int xs, int ys) {
 	std::list<State*> lista;
 	int xd[] = { -1, -1, -1,  0,  0,  1,  1,  1 };
@@ -89,8 +88,6 @@ std::list<State*> State::generateNextStatesByPosition(int xs, int ys) {
 	}
 	return lista;
 }
-
-
 
 void State::print() {
 	for (int i = 1; i < 5; i++) {
