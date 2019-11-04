@@ -22,6 +22,19 @@ State::State()
 	}
 
 	varScore = INT_MIN;
+	previousState = nullptr;
+}
+
+void State::setBoard() {
+	char board[6][6] = { 'b', 'b', 'b', 'b', 'b', 'b',
+					'b', 'j', 'j', 'j', '0', 'b',
+					'b', '0', '0', '0', '0', 'b',
+					'b', '0', 'j', '0', 'c', 'b',
+					'b', 'c', 'c', 'c', '0', 'b',
+					'b', 'b', 'b', 'b', 'b', 'b'
+	};
+
+	memcpy(this->board, board, sizeof(board));
 }
 
 State::State(State* state, int oldx, int oldy, int newx, int newy) {
@@ -37,15 +50,18 @@ State::State(State* state, int oldx, int oldy, int newx, int newy) {
 		std::swap(board[oldx][oldy], board[newx][newy]);
 
 	varScore = INT_MIN;
+	previousState = nullptr;
 }
 
-bool State::isFinal() {
-	for (int i = 1; i < 5; i++) {
-		if (board[1][i] != 'j') return false;
-	}
-	for (int i = 1; i < 5; i++) {
-		if (board[4][i] != 'c') return false;
-	}
+bool State::isFinal(char player) {
+	if(player == 'j')
+		for (int i = 1; i < 5; i++) {
+			if (board[1][i] != 'j') return false;
+		}
+	else
+		for (int i = 1; i < 5; i++) {
+			if (board[4][i] != 'c') return false;
+		}
 	return true;
 }
 

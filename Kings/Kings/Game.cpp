@@ -30,22 +30,24 @@ void Game::computerMove() {
 
 void Game::mainGameLoop()
 {
-	char currentPlayer = 'p';
-	states.push_back(new State());
+	char currentPlayer = 'j';
+	State* initialState = new State();
+	//initialState->setBoard();
+	states.push_back(initialState);
 	while(true) {
 		renderBoard();
-		currentPlayer = 'p';
+		currentPlayer = 'j';
 		playerMove();
-		if (getCurrentState()->isFinal())
+		if (getCurrentState()->isFinal('j'))
 			break;
 		currentPlayer = 'c';
 		renderBoard();
 		computerMove();
-		if (getCurrentState()->isFinal())
+		if (getCurrentState()->isFinal('c'))
 			break;
 	}
-
-	if(currentPlayer == 'p')
+	renderBoard();
+	if(currentPlayer == 'j')
 		std::cout << "Player won! gj" << std::endl;
 	else if(currentPlayer == 'c')
 		std::cout << "Git gud m8" << std::endl;
