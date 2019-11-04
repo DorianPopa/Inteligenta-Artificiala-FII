@@ -18,6 +18,12 @@ void Game::playerMove() {
 	int fromX, fromY, toX, toY;
 	std::cout << "Input (initial coords)(final coords): ";
 	std::cin >> fromX >> fromY >> toX >> toY;
+	if (fromX == 69 && fromY == 69 && toX == 69 && toY == 69) {
+		std::cout << "gIt rEkT bY oUr 1337 bOt -------- ][_, {[]} ][_," << std::endl;
+		printRekt();
+		exit(0);
+	}
+		
 
 	State* newState = new State(states.back(), fromX, fromY, toX, toY);
 	if (newState != nullptr)
@@ -51,4 +57,19 @@ void Game::mainGameLoop()
 		std::cout << "Player won! gj" << std::endl;
 	else if(currentPlayer == 'c')
 		std::cout << "Git gud m8" << std::endl;
+}
+
+void Game::printRekt() {
+	std::cout << std::endl; 
+	std::cout << "                      ___" << std::endl;
+	std::cout << "                    / `` )" << std::endl;
+	std::cout << "                 , / `  /" << std::endl;
+	std::cout << "                  /    /" << std::endl;
+	std::cout << "            / `` /' ' / ````-," << std::endl;
+	std::cout << "         / '/   /    /     /``\\ " << std::endl;
+	std::cout << "        ('(   `   `     `~/'   ') " << std::endl;
+	std::cout << "         \\               '     / " << std::endl;
+	std::cout << "          \\                _ -`" << std::endl;
+	std::cout << "            \\              (" << std::endl;
+	std::cout << "              \\             \\   " << std::endl;
 }

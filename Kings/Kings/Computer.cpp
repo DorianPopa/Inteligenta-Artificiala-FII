@@ -27,6 +27,13 @@ State* Computer::getNextMove(State* currentState)
 			chestie = chestie->previousState;
 		return chestie;
 	}
+	else if (algorithm == "minimaxretezat") {
+		int desiredDepth = 0;
+		State* chestie = minimaxRetezat(currentState, 7, true, INT_MIN, INT_MAX);
+		while (chestie->previousState != currentState)
+			chestie = chestie->previousState;
+		return chestie;
+	}
 	else
 		return nullptr;
 }
@@ -73,6 +80,52 @@ State* Computer::minimax(State* position, int depth, bool maximizingPlayer)
 				minEval = eval;
 			}
 				
+		}
+		return minEval;
+	}
+}
+
+State* Computer::minimaxRetezat(State* position, int depth, bool maximizingPlayer, int alpha, int beta)
+{
+	if (depth == 0)
+		return position;
+
+	if (maximizingPlayer) {
+		if (position->isFinal('j'))
+			return position;
+		State* maxEval = new State();
+		maxEval->setScore(INT_MIN);
+		for (auto possibleNextState : position->generateNextStates('c')) {
+			possibleNextState->previousState = position;
+			State* eval = minimaxRetezat(possibleNextState, depth - 1, false, alpha, beta);
+			int evalInt = eval->score();
+			int maxEvalInt = maxEval->varScore;
+			if (evalInt > maxEvalInt) {
+				maxEval = eval;
+			}
+			alpha = std::max(alpha, evalInt);
+			if (beta <= alpha)
+				break;
+		}
+		return maxEval;
+	}
+
+	else {
+		if (position->isFinal('c'))
+			return position;
+		State* minEval = new State();
+		minEval->setScore(INT_MAX);
+		for (auto possibleNextState : position->generateNextStates('j')) {
+			possibleNextState->previousState = position;
+			State* eval = minimaxRetezat(possibleNextState, depth - 1, true, alpha, beta);
+			int evalInt = eval->score();
+			int minEvalInt = minEval->varScore;
+			if (evalInt < minEvalInt) {
+				minEval = eval;
+			}
+			beta = std::min(beta, evalInt);
+			if (beta <= alpha)
+				break;
 		}
 		return minEval;
 	}

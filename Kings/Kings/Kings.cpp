@@ -8,7 +8,7 @@
 
 int main()
 {
-	Game* game = new Game("minimax");
+	Game* game = new Game("minimaxretezat");
 	game->mainGameLoop();
 	return 0;
 }

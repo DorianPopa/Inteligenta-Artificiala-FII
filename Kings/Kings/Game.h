@@ -20,5 +20,7 @@ public:
 
 	Game(std::string solverType);
 	void mainGameLoop();
+
+	static void printRekt();
 };
 
