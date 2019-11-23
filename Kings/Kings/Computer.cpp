@@ -29,7 +29,7 @@ State* Computer::getNextMove(State* currentState)
 	}
 	else if (algorithm == "minimaxretezat") {
 		int desiredDepth = 0;
-		State* chestie = minimaxRetezat(currentState, 7, true, INT_MIN, INT_MAX);
+		State* chestie = minimaxRetezat(currentState, 8, true, INT_MIN, INT_MAX);
 		while (chestie->previousState != currentState)
 			chestie = chestie->previousState;
 		return chestie;
@@ -62,12 +62,10 @@ State* Computer::minimax(State* position, int depth, bool maximizingPlayer)
 			int maxEvalInt = maxEval->varScore;
 			if (evalInt > maxEvalInt) {
 				maxEval = eval;
-			}
-				
+			}		
 		}
 		return maxEval;
 	}
-
 	else {
 		if (position->isFinal('c'))
 			return position;
@@ -79,7 +77,6 @@ State* Computer::minimax(State* position, int depth, bool maximizingPlayer)
 			if (eval->score() < minEval->varScore) {
 				minEval = eval;
 			}
-				
 		}
 		return minEval;
 	}
@@ -109,7 +106,6 @@ State* Computer::minimaxRetezat(State* position, int depth, bool maximizingPlaye
 		}
 		return maxEval;
 	}
-
 	else {
 		if (position->isFinal('c'))
 			return position;
